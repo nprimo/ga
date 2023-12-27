@@ -1,7 +1,8 @@
-name: 💄 Build on change 
+name: 🔨 Build on change 
 
 env:
   BRANCH: main
+  # Docker image directory
   TRIGGER_PATH: "^special/*"
 
 on:
