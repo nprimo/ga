@@ -27,7 +27,8 @@ jobs:
         run: |
           CHANGED_FILES=$(
             git diff --name-only --merge-base $BRANCH | \
-            grep -E $TRIGGER_PATH | xargs || true
+            grep -E $TRIGGER_PATH | xargs \
+            || true 
           )
           echo "CHANGED_FILES=$CHANGED_FILES" >> $GITHUB_OUTPUT
 
