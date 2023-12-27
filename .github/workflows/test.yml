@@ -22,7 +22,8 @@ jobs:
       - name: Get all changed file(s)
         id: changed-files
         run: |
-          echo "changed_files=$(git diff --name-only --merge-base $BRANCH | xargs)" >> $GITHUB_OUTPUT
+          changed_files = $(git diff --name-only --merge-base $BRANCH | xargs)
+          echo "changed_files=$changed_files" >> $GITHUB_OUTPUT
 
       - name: Run step if any  file(s) changed
         if: steps.changed-files.outputs.changed_files != ''
