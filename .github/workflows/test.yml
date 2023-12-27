@@ -24,13 +24,16 @@ jobs:
       - name: Get all changed file(s)
         id: changed-files
         run: |
-          changed_files=$(git diff --name-only --merge-base $BRANCH | grep -E $TRIGGER_PATH || true)
-          echo "changed_files=$changed_files" >> $GITHUB_OUTPUT
+          CHANGED_FILES=$(
+            git diff --name-only --merge-base $BRANCH | \
+            grep -E $TRIGGER_PATH || true
+          )
+          echo "CHANGED_FILES=$CHANGED_FILES" >> $GITHUB_OUTPUT
 
-      - name: Run step if any  file(s) changed
+      - name: Run step if any file(s) changed
         env: 
-          CHANGED_FILES: ${{ steps.changed-files.outputs.changed_files }}
-        if: steps.changed-files.outputs.changed_files 
+          CHANGED_FILES: ${{ steps.changed-files.outputs.CHANGED_FILES }}
+        if: steps.changed-files.outputs.CHANGED_FILES 
         run: |
           echo "===="
           for f in $CHANGED_FILES; do echo $f; done
