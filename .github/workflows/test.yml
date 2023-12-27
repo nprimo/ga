@@ -6,6 +6,9 @@ on:
       - '.github/**'
     branches: [main]
 
+env:
+  BRANCH: main
+
 jobs:
   GA-Misc-Check-Prettier:
     runs-on: ubuntu-latest
@@ -19,9 +22,11 @@ jobs:
       - name: Get all changed file(s)
         id: changed-files
         run: |
-          echo "changed_files=$(git diff --name-only --merge-base main | xargs)" >> $GITHUB_OUTPUT
+          echo "changed_files=$(git diff --name-only --merge-base $BRANCH | xargs)" >> $GITHUB_OUTPUT
 
-      - name: Run step if any *.md file(s) changed
-        if: steps.changed-md.outputs.changed_files != ''
+      - name: Run step if any  file(s) changed
+        if: steps.changed-files.outputs.changed_files != ''
         run: |
-          echo ${{ steps.changed-files.outputs.changed_files }}
+          echo "===="
+          for f in ${{ steps.changed-files.outputs.changed_files }}; do echo $f; done
+          echo "===="
