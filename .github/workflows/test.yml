@@ -1,11 +1,14 @@
 name: 🔨 Build on change 
 
+env:
+  IMAGE_PATH: "special/**"
+
 on:
   push:
     branches:
-      - 'test' 
+      - "test" 
     paths:
-      - 'special/**'
+      - "$IMAGE_PATH" 
 
 
 jobs:
