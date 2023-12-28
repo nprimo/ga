@@ -6,10 +6,11 @@ env:
   TRIGGER_PATH: "^special/*"
 
 on:
-  pull_request:
-    paths-ignore:
-      - '.github/**'
-    branches: [$BRANCH]
+  push:
+    branches:
+      - 'test'
+    paths:
+      - 'special/*' 
 
 
 jobs:
@@ -22,20 +23,7 @@ jobs:
         with:
           fetch-depth: 2 # OR "2" -> To retrieve the preceding commit.
 
-      - name: Get all changed file(s)
-        id: changed-files
-        run: |
-          CHANGED_FILES=$(
-            git diff --name-only --merge-base $BRANCH | \
-            grep -E $TRIGGER_PATH | xargs \
-            || true 
-          )
-          echo "CHANGED_FILES=$CHANGED_FILES" >> $GITHUB_OUTPUT
-
       - name: Run step if any file(s) changed
-        env: 
-          CHANGED_FILES: ${{ steps.changed-files.outputs.CHANGED_FILES }}
-        if: steps.changed-files.outputs.CHANGED_FILES 
         run: |
           echo "===="
           echo "Building..."
