@@ -1,26 +1,17 @@
 name: 🔨 Build on change 
 
-env:
-  IMAGE_PATH: "special/**"
-
 on:
   push:
     branches:
       - "test" 
     paths:
-      - "$IMAGE_PATH" 
-
+      - "special/**"
 
 jobs:
   GA-Build-on-change:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 🐧 Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 2 # OR "2" -> To retrieve the preceding commit.
-
       - name: Run step if any file(s) changed
         run: |
           echo "===="
