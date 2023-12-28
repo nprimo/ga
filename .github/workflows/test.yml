@@ -1,16 +1,16 @@
 name: 🔨 Build on change 
 
 env:
-  BRANCH: main
+  BRANCH: "test"
   # Docker image directory
-  TRIGGER_PATH: "^special/*"
+  TRIGGER_PATH: "special/*"
 
 on:
   push:
     branches:
-      - 'test'
+      - "$BRANCH" 
     paths:
-      - 'special/*' 
+      - "$TRIGGER_PATH"
 
 
 jobs:
